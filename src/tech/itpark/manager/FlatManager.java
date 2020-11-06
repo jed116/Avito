@@ -15,13 +15,32 @@ public class FlatManager {
         this.deltaFloor = deltaFloor;
     }
 
+    public Flat getFlatById(int id){
+        for (Flat item : items) {
+            if (item.getId() == id){
+                return item;
+            }
+        }
+        return null;
+    }
+
     public void save(Flat item) {
         if (item.getId() == 0) {
             item.setId(nextId);
             nextId++;
             items.add(item);
         }
-        // TODO: handle update
+        else{
+            Flat saved = getFlatById(item.getId());
+            if(saved != null){
+                saved.setRooms(item.getRooms());
+                saved.setFloor(item.getFloor());
+                saved.setPrice(item.getPrice());
+                saved.setDistrict(item.getDistrict());
+                saved.setStations(item.getStations());
+            }
+
+        }
     }
 
     public ArrayList<Flat> search(int rooms, double minPrice, double maxPrice, int minFloor, int maxFloor, ArrayList<String> districts, ArrayList<String> stations) {
